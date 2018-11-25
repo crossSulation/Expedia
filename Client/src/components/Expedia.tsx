@@ -98,7 +98,7 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
     paging(cindex:number) {
       let totalPage=  this.state.items.length /this.state.defaultPageSize;
        if(cindex<totalPage) {
-           this.setState({cpageItems: this.state.items.slice((cindex-1)*this.state.defaultPageSize,cindex*this.state.defaultPageSize-1)});
+           this.setState({cpageItems: this.state.items.slice((cindex-1)*this.state.defaultPageSize,cindex*this.state.defaultPageSize-1),cindex: cindex});
            cindex++;
        }else {
            //重新向服务器pull 数据
@@ -122,14 +122,23 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
         console.log('cindex:'+cindex);
         this.paging(cindex);
     }
+    pNextItemClickCallback(e:any) {
+        let cindex =this.state.cindex;
+        this.paging(cindex+1);
+    }
+    pPreviouseClickCallback(e:any) {
+        let cindex =this.state.cindex;
+        this.paging(cindex-1);
+    }
     buildQuery():string[] {
         return null;
     }
     //connect to the changeEvent of input
     typeFuc(e:any) {
        let val =e.target.value;
-       this.setState({Name:val});
-       //setTimeout(this.fetchContactsByUserName,3000,val);
+       this.setState({Name:val,searchVal:val});
+       let cb =this.fetchContactsByUserName.bind(this);
+       setTimeout(cb,1000,val);
        //this.fetchContactsByUserName(val);
        console.log(val);
     }
@@ -214,7 +223,12 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
                  <TableBody cpageItems={this.state.cpageItems}/>
                 </tbody>
             </table>
-        <PageBar pageItemClickCallback={this.pageItemClickCallback.bind(this)}/>
+        <PageBar 
+            pageItemClickCallback={this.pageItemClickCallback.bind(this)} 
+            pNextItemClickCallback={this.pNextItemClickCallback.bind(this)} 
+            pPreviouseClickCallback={this.pPreviouseClickCallback.bind(this)}
+            searchVal ={this.state.searchVal}
+        />
         </div>);
     }
 }

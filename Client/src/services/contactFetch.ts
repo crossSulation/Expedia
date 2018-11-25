@@ -94,9 +94,9 @@ import { resolve } from "url";
           return promise;
       }
     
-    let fetchContactTotals =():Promise<any> => {
+    let fetchContactTotals =(name?:string):Promise<any> => {
         const promise =new Promise((resolve,reject)=>{
-            Axios.get(_appConfig.api.contactFetchCount,{})
+            Axios.get(_appConfig.api.contactFetchCount.replace('{userName}',!!name?'':name),{})
             .then((result)=>{
                 resolve(result.data);
             })

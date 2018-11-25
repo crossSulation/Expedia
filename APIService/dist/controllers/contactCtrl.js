@@ -91,8 +91,13 @@ let queryContactsByUserId = (req, resp) => {
     });
 };
 let fetchContactTotals = (req, resp) => {
-    let sql = `select  count(UserId)  as TotalCount from Expedia.Contact;`;
-    DBHelper_1.default.query(sql, [], (result, fields) => {
+    let sql = `select  count(UserId)  as TotalCount from Expedia.Contact`;
+    console.log(req.params);
+    if (req.params.userName && (req.params.userName != 'undefined' && req.params.userName != '' && req.params.userName != 'null')) {
+        sql = sql + ` where Name like '%${req.params.userName}%'`;
+    }
+    console.log(sql);
+    DBHelper_1.default.query(sql, [req.params.userName], (result, fields) => {
         console.log(JSON.stringify(result.result[0]));
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader('Content-Type', 'applicaiton/json');

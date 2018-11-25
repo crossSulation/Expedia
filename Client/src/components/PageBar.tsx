@@ -25,7 +25,10 @@ class PageNav extends React.Component<PageNavProps,{}> {
     }
 }
 interface PageBarProps {
-    pageItemClickCallback: Function
+    pageItemClickCallback: Function, // item click callback
+    pNextItemClickCallback: Function, // next click callback
+    pPreviouseClickCallback:Function,  // previouse click callback
+    searchVal:string  //search name, get the current data
 }
 export default class PageBar extends React.Component<PageBarProps,{}> {
     constructor(props:any) {
@@ -38,10 +41,11 @@ export default class PageBar extends React.Component<PageBarProps,{}> {
     }
    
     componentWillMount() {
-        ContactFecthHelper.getContactTotalCounts()
+        ContactFecthHelper.getContactTotalCounts(this.props.searchVal)
         .then((result)=> {
             console.log(JSON.stringify(result[0]));
-            this.setState({cTotalPaginCount: result[0].TotalCount});
+            let totalPageCount =parseInt(result[0].TotalCount) /this.state.defaultPageSize;
+            this.setState({cTotalPaginCount: totalPageCount});
         })
         .catch((error)=>{
 
@@ -55,13 +59,13 @@ export default class PageBar extends React.Component<PageBarProps,{}> {
         return (
         <nav aria-label="Page navigation">
             <ul className="pagination justify-content-center">
-            <li className="page-item">
+            <li className="page-item" onClick={(e)=>{this.props.pPreviouseClickCallback(e)}}>
                 <a className="page-link" href="#" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <PageNav items={this.state.items} totalPageCount={this.state.cTotalPaginCount} clickCallback={(e:any)=>{this.props.pageItemClickCallback(e)}}/>
-            <li className="page-item">
+            <li className="page-item" onClick={(e)=>{this.props.pNextItemClickCallback(e)}}>
                 <a className="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
                 </a>

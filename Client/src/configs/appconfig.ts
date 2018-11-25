@@ -11,7 +11,7 @@
           "contactDelByUserIdUrl":"/contacts/userId/{userId}",
           "contactModifyUrl":"/contacts",
           "contactNewOneUrl":"/contacts",
-          "contactFetchCount":"/contacts/count",
+          "contactFetchCount":"/contacts/count/{userName}",
           "contactFecthByUserName":"/contacts/userName/{userName}"
       },
       //constant config
