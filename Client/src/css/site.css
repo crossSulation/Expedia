@@ -1,0 +1,45 @@
+.left_top_nav {
+    margin-left:5px;
+}
+
+.sidbar_item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-top:none;
+    border-left: none;
+    border-right: none;
+}
+
+.sidbar_item >a {
+    display: inline-block;
+    color: black;
+    text-decoration: none
+}
+
+.sidbar_item:hover {
+    background-color: #28a745
+}
+
+.content_display {
+    padding-top:20px;
+}
+
+.card-item {
+    margin-top:15px;
+}
+
+.card-item-btn-group {
+    text-align: center
+}
+.card-item-btn-group .card-item-btn-group-link {
+    margin-right: 50px;
+}
+.table-th:hover {
+    border-right: 1px solid white;
+    cursor:pointer;
+}
+
+.trangle {
+    width: 0;
+    height: 0;
+    border-width: 30px;
+}
