@@ -62,6 +62,7 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
             searchVal:null,
             Name:null
         }
+        this.fetchContactsByUserName =this.fetchContactsByUserName.bind(this);
     }
     
     componentWillMount() {
@@ -72,7 +73,7 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
       
     }
     componentWillUnmount() {
-       
+
     }
     fetchContactsByUserName(userName?:string):void {
        //fetch the data from backend
@@ -134,11 +135,10 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
         return null;
     }
     //connect to the changeEvent of input
-    typeFuc(e:any) {
-       let val =e.target.value;
+    typeFuc(value:any) {
+       let val =value;
        this.setState({Name:val,searchVal:val});
-       let cb =this.fetchContactsByUserName.bind(this);
-       setTimeout(cb,1000,val);
+       setTimeout(this.fetchContactsByUserName,1000,val);
        //this.fetchContactsByUserName(val);
        console.log(val);
     }
