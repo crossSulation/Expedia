@@ -1,12 +1,14 @@
-Api Service
+Api Service . 
 
-cd APISerivice
+cd APISerivice . 
+
 npm run build .  ---build ts
 
 npm run server   ---config a server
 
 
-cd Client
+cd Client . 
+
 Client side .  
 
 npm run start .  --run a server with webpack
