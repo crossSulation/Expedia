@@ -2,13 +2,18 @@ Api Service .
 
 cd APISerivice . 
 
-npm run build .  ---build ts
+npm install
 
-npm run server   ---config a server
+npm run build
 
+npm run server 
+
+
+
+Client side . 
 
 cd Client . 
 
-Client side .  
+npm install
 
-npm run start .  --run a server with webpack
+npm run start
