@@ -33,9 +33,13 @@ module.exports = (env) => {
             splitChunks: {
                 cacheGroups:{
                     vendor:{
-                        test: /[\\/]node_modules[\\/](bootstrap|bootstrap\/dist\/css\/bootstrap.css|event-source-polyfill|isomorphic-fetch|react|react-dom|react-router-dom|jquery)[\\/]/,
+                        test: /[\\/]node_modules[\\/](bootstrap\/dist\/bootstrap.js|event-source-polyfill|isomorphic-fetch|react|react-dom|react-router-dom|jquery|@fortawesome\/react-fontawesome|@fortawesome\/fontawesome-common-types|@fortawesome\/fontawesome-free|@fortawesome\/fontawesome-svg-core|)[\\/]/,
                         name: 'vendor',
                         chunks: 'all',
+                    },
+                    vender_css: {
+                        test:/bootstrap\/dist\/css\/bootstrap.css/,
+                        name:'vendor_css'
                     }
                 }
             }

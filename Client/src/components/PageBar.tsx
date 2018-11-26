@@ -10,7 +10,7 @@ interface PageNavProps {
 }
 class PageNav extends React.Component<PageNavProps,{}> {
     render() {
-        console.log(this.props.items);
+        //console.log(this.props.items);
         let constItems =this.props.items.length && this.props.items.map((item:any)=>{
             return <li className="page-item" key={item} onClick={(e)=>{this.props.clickCallback(e)}}><NavLink to={'/'} className="page-link">{item}</NavLink></li>
         });
@@ -44,7 +44,7 @@ export default class PageBar extends React.Component<PageBarProps,{}> {
     componentWillMount() {
         ContactFecthHelper.getContactTotalCounts(this.props.searchVal)
         .then((result)=> {
-            console.log(JSON.stringify(result[0]));
+            //console.log(JSON.stringify(result[0]));
             let totalPageCount =parseInt(result[0].TotalCount) /this.state.defaultPageSize;
             this.setState({cTotalPaginCount: totalPageCount});
         })

@@ -4,6 +4,8 @@
 
 import * as React from "react";
 import { debounce ,throttle,Cancelable} from "lodash";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export interface SearchProps {
     changCallback: React.ChangeEventHandler
@@ -30,8 +32,8 @@ export default class SearchBar extends React.Component<SearchProps,{}> {
         <form className="form-inline my-2 my-lg-0">
             <div className="form-group">
                 <input type="search" className="form-control mr-sm-2" onChange={this.handleChange} placeholder="Search"/>
+                <FontAwesomeIcon icon={faSearch}/>
             </div>
-            <button type="submit" className="btn btn-outline-success my-2 my-sm-0">Submit</button>
         </form>)
     }
 }

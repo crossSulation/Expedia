@@ -59,8 +59,8 @@ export default class ContactDetail extends React.Component<any,any> {
     render() {
         let itemRows:any[] =[];
         for(let i=0;i<this.state.details_items.length;i++) {
-            let item =<div className="col-4">
-                    <ContactDetailItem item={this.state.details_items[i]}/>
+            let item =<div key={i} className="col-4">
+                    <ContactDetailItem  item={this.state.details_items[i]}/>
                 </div>
             itemRows.push(item);
         }

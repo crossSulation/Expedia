@@ -12,7 +12,7 @@ class Line extends React.Component<LineProps,{}> {
         super(props);
     }
     render() {
-        console.log(JSON.stringify(this.props));
+        //console.log(JSON.stringify(this.props));
         return (
             <tr>
                 <td scope="row"><Link to={'/contactDetails/{userId}'.replace('{userId}',this.props.item.UserId)}>{this.props.item.UserId}</Link></td>
@@ -36,7 +36,7 @@ export class TableBody extends React.Component<cpageItemsProps,{}> {
     }
     render() {
         return this.props.cpageItems.map((titem:ContactModel)=>{
-            return <Line item={titem}></Line>
+            return <Line item ={titem} key={titem.UserId}></Line>
          })
     }
 }
@@ -83,8 +83,8 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
        }
        ContactFecthHelper.fetchContactByUserName(userName|| this.state && this.state.Name)
        .then((result:ContactModel[])=>{
-           console.log('result....');
-          console.log('result:'+JSON.stringify(result));
+          //console.log('result....');
+          //console.log('result:'+JSON.stringify(result));
           this.setState({items: result});
           this.paging(1);
        })
@@ -117,10 +117,10 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
      * @param e 
      */
     pageItemClickCallback(e:any) {
-        console.log('item:'+e.target.innerText);
+        //console.log('item:'+e.target.innerText);
         let tmp =e.target.innerText;
         let cindex =parseInt(tmp);
-        console.log('cindex:'+cindex);
+        //console.log('cindex:'+cindex);
         this.paging(cindex);
     }
     pNextItemClickCallback(e:any) {
@@ -209,13 +209,16 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
                         </th>
                         <th scope="col" className="table-th"><span onClick={(e)=>{
                             this.sortBy(e);
-                        }}>BirthDate</span></th>
+                        }}>BirthDate</span>
+                        </th>
                         <th scope="col" className="table-th"><span onClick={(e)=>{
                             this.sortBy(e);
-                        }}>Age</span></th>
+                        }}>Age</span>
+                        </th>
                         <th scope="col" className="table-th"><span onClick={(e)=>{
                             this.sortBy(e);
-                        }}>ContactCount</span></th>
+                        }}>ContactCount</span>
+                        </th>
                         <th scope="col" className="table-th">IsFavorite</th>
                     </tr>
                 </thead>
