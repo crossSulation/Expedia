@@ -1,6 +1,6 @@
 Api Service . 
 
-cd APISerivice . 
+cd APISerivice 
 
 npm install
 
@@ -12,7 +12,7 @@ npm run server
 
 Client side . 
 
-cd Client . 
+cd Client 
 
 npm install
 
