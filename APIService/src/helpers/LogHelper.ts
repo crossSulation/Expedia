@@ -7,7 +7,7 @@ let myFormat =Winston.format.printf((info)=>{
 let myTransports = {
     console: new Winston.transports.Console({level:'error'}),
     file: new Winston.transports.File({
-        filename: __dirname+'debug.log',
+        filename: 'debug.log',
         level: 'info'
     }),
 };

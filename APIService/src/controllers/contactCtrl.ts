@@ -5,13 +5,14 @@
 import DBHelper from "../helpers/DBHelper";
 import { FieldInfo, raw } from "mysql";
 import {Request ,Response} from 'express';
+import logger from "../helpers/LogHelper";
     //CURD
    let queryAllContacts =(req:Request,resp:Response):void =>{
          let sql=`select c.UserId,  c.Title, Name, date(c.BirthDate) as BirthDate ,  floor(datediff(now(),date(c.BirthDate)) /365) as Age ,c.IsFavorite ,
          count(cd.UserID) as ContactCount
          from Expedia.Contact c 
          inner join Expedia.ContactDetail  cd on c.UserId =cd.UserId`;
-         console.log(JSON.stringify(req.body));
+         //console.log(JSON.stringify(req.body));
          //build the sql;
          let rawReq = req.body;
          if(rawReq) {
@@ -26,7 +27,7 @@ import {Request ,Response} from 'express';
          if(rawReq.birthDate){
              sql=sql+` c.BirthDate='${rawReq.birthDate}' and`;
          }
-         console.log(rawReq.isFavorite);
+         //console.log(rawReq.isFavorite);
          if(rawReq.isFavorite !=undefined || rawReq.isFavorite!='' || rawReq.isFavorite!=null) {
              sql=sql+` c.IsFavorite =${rawReq.isFavorite}`;
          }
@@ -39,7 +40,8 @@ import {Request ,Response} from 'express';
              sql=sql+ ` order by ${rawReq.orderBy} ${rawReq.descORAsc ? rawReq.descORAsc :' desc'}`
          }
          sql =sql +` limit 1000`;
-         console.log(sql);
+         //console.log(sql);
+         logger.info(`api from ${sql} queryAllContacts sql ${sql}`);
          DBHelper.query(sql,{},(result:any,fields:FieldInfo[])=>{
             //console.log(JSON.stringify(result.result));
             resp.setHeader("Access-Control-Allow-Origin", "*");
@@ -63,7 +65,8 @@ import {Request ,Response} from 'express';
         sql =sql +` order by ${req.params.orderBy} ${req.params.descORAsc? req.params.descORAsc : ' desc'}`;
        }
        sql =sql +` limit 1000`;
-       console.log(sql);
+       //console.log(sql);
+       logger.info(`api from: ${req.originalUrl} queryContactsByUserLike sql ${sql}`);
        DBHelper.query(sql,[],(result:any,fields:FieldInfo[])=>{
             resp.json(result.result);
             resp.end();
@@ -81,7 +84,8 @@ import {Request ,Response} from 'express';
             sql =sql +` order by ${req.params.orderBy} ${req.params.descORAsc? req.params.descORAsc : ' desc'}`;
         }
         sql =sql +` limit 1000`;
-        console.log(sql);
+        //console.log(sql);
+        logger.info(`api from: ${req.originalUrl},sql: ${sql}`)
         DBHelper.query(sql,[],(result:any,fields:FieldInfo[])=>{
             console.log(JSON.stringify(result.result));
             resp.setHeader("Access-Control-Allow-Origin", "*");
@@ -97,7 +101,8 @@ import {Request ,Response} from 'express';
         if(req.params.userName &&(req.params.userName!='undefined' && req.params.userName!='' && req.params.userName!='null')) {
             sql = sql+` where Name like '%${req.params.userName}%'`;
         }
-        console.log(sql);
+        //console.log(sql);
+        logger.info(`api from:${req.originalUrl}, sql:${sql}`);
         DBHelper.query(sql,[req.params.userName],(result:any,fields:FieldInfo)=>{
             console.log(JSON.stringify(result.result[0]));
             resp.setHeader("Access-Control-Allow-Origin", "*");
@@ -108,6 +113,7 @@ import {Request ,Response} from 'express';
     }
     let queryContactDetailByUserId =(req:Request,resp:Response):void => {
         let sql=`select * from ContactDetail where UserId='${req.params.userId}'`;
+        logger.info(`api from:${req.originalUrl},sql:${sql}`);
         DBHelper.query(sql,[],(result:any,fields:FieldInfo)=>{
             console.log(JSON.stringify(result.result));
             resp.setHeader("Access-Control-Allow-Origin", "*");
