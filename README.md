@@ -18,7 +18,7 @@ To local disk, eg ~/Documents/Expedia
 run client
 `npm run start`
 ##### Project digram
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![]
+![]https://github.com/crossSulation/Expedia/blob/master/instruction.svg![]
 ### Building Tools
 - gulp, webpack
 
