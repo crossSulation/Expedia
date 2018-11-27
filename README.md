@@ -18,7 +18,10 @@ To local disk, eg ~/Documents/Expedia
 run client
 `npm run start`
 ##### Project digram
-![]https://github.com/crossSulation/Expedia/blob/master/instruction.svg![]
+![](https://github.com/crossSulation/Expedia/blob/master/instruction.svg)
+
+- Using the travis to maitain the CI Process , git hub as the respository, furture more ,I'd prefer deploy the app with docker env.
+- As the client side and server side has diff domain, use proxy to route to diff api service ,for now we just has one api service. In the future, I'd like to add load balance for complex api service provider
 ### Building Tools
 - gulp, webpack
 
