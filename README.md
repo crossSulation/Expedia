@@ -9,9 +9,14 @@
 To local disk, eg ~/Documents/Expedia 
 > command: 
 `cd Expedia/APIService`
-- to the API Backend service 
-`npm run build & npm run server`
-.You must install mysql first, if none has been installed
+- to the API Backend service
+- when debug
+> command:
+`npm run build`
+- when release
+> command:
+`npm run server`
+- You must install mysql first, if none has been installed
 - To the client side,
 > command:
 `cd Expedia/Client`
