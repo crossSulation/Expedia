@@ -75,7 +75,6 @@ class DBHelper {
 }
 
 //CURD
-
 export default new DBHelper()
 
 

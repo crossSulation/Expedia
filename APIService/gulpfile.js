@@ -4,23 +4,12 @@ const tsProject =ts.createProject('tsconfig.json');
 
 const server = require('gulp-dev-server');
 
-gulp.task('default',()=>{
+function defaultCallback() {
     return tsProject.src()
             .pipe(tsProject())
             .js.pipe(gulp.dest('dist'));
-});
-gulp.task('watch',()=>{
-    return gulp.watch(['src/**/*.ts'],{},()=>{
-        console.log('watching....');
-        
-    });
-});
-
-gulp.task('build',['default','watch','creatServer']);
-
-gulp.task('server',['default','creatServer']);
-
-gulp.task('creatServer',()=>{
+}
+function createServerCallback() {
     return server.task({
         restart:['/dist/**/*.js'],
         notify:[],
@@ -29,4 +18,21 @@ gulp.task('creatServer',()=>{
             script: { path: __dirname+'/dist/server.js' }
         }
     })
+}
+gulp.task('default',()=>{
+    defaultCallback();
+});
+gulp.task('watch',()=>{
+    return gulp.watch(['src/**/*.ts'],{},()=>{
+        console.log('watching....');
+        defaultCallback();
+    });
+});
+
+gulp.task('build',['default','watch','creatServer']);
+
+gulp.task('server',['default','creatServer']);
+
+gulp.task('creatServer',()=>{
+    createServerCallback();
 });
