@@ -12,7 +12,8 @@
           "contactModifyUrl":"/contacts",
           "contactNewOneUrl":"/contacts",
           "contactFetchCount":"/contacts/count/{userName}",
-          "contactFecthByUserName":"/contacts/userName/{userName}"
+          "contactFecthByUserName":"/contacts/userName/{userName}",
+          "bookFetchAll":"/books"
       },
       //constant config
       "constant": {

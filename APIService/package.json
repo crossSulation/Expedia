@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "karma",
-    "build": "gulp",
-    "server": "node dist/server.js"
+    "build": "gulp build",
+    "server": "gulp server"
   },
   "keywords": [
     "api"

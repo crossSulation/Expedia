@@ -9,8 +9,18 @@ gulp.task('default',()=>{
             .pipe(tsProject())
             .js.pipe(gulp.dest('dist'));
 });
+gulp.task('watch',()=>{
+    return gulp.watch(['src/**/*.ts'],{},()=>{
+        console.log('watching....');
+        
+    });
+});
 
-gulp.task('server',['default'],()=>{
+gulp.task('build',['default','watch','creatServer']);
+
+gulp.task('server',['default','creatServer']);
+
+gulp.task('creatServer',()=>{
     return server.task({
         restart:['/dist/**/*.js'],
         notify:[],

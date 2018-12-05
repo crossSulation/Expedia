@@ -8,7 +8,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Winston = __importStar(require("winston"));
-let myFormat = Winston.format.printf((info) => {
+const { combine, timestamp, label, printf } = Winston.format;
+let myFormat = printf((info) => {
     return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
 });
 let myTransports = {
@@ -20,7 +21,7 @@ let myTransports = {
 };
 let logger = Winston.createLogger({
     levels: Winston.config.syslog.levels,
-    format: myFormat,
+    format: combine(label({ label: 'api' }), timestamp(), myFormat),
     transports: [
         myTransports.console,
         myTransports.file

@@ -1,7 +1,0 @@
-undefined [undefined] info: server is runing at http://localhost:3000
-undefined [undefined] info: server is runing at http://localhost:3000
-undefined [undefined] info: api from: /contacts/userName/null queryContactsByUserLike sql select  c.UserId,  c.Title, Name, date(c.BirthDate) as BirthDate ,  floor(datediff(now(),date(c.BirthDate)) /365) as Age ,c.IsFavorite ,
-       count(cd.UserID) as ContactCount
-       from Expedia.Contact c 
-       inner join Expedia.ContactDetail  cd on c.UserId =cd.UserId group by cd.UserId limit 1000
-undefined [undefined] info: api from:/contacts/count/null, sql:select  count(UserId)  as TotalCount from Expedia.Contact

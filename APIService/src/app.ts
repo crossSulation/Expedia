@@ -18,4 +18,5 @@ app.get('/contacts/userName/',contactCtr.getContactsByUserLike);
 app.get('/contactDetails/userId/:userId',contactCtr.getContactDetailByUserId);
 app.get('/contacts/count/:userName',contactCtr.getContactTotalCount);
 app.get('/contacts/count/',contactCtr.getContactTotalCount);
+
 export default app;

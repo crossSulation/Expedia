@@ -1,0 +1,23 @@
+language: node_js
+os: osx
+before_install: 
+- brew install git-lfs
+
+before_install: 
+- git lfs pull
+
+git:
+  lfs_skip_smudge: true
+  sparse_checkout: skip-worktree-map-file
+
+# blocklist
+branches:
+  except:
+  - legacy
+  - experimental
+
+# safelist
+branches:
+  only:
+  - master
+  - stable
