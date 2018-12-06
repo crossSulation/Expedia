@@ -43,3 +43,51 @@
     height: 0;
     border-width: 30px;
 }
+
+
+.msg_diss {
+    display: none;
+}
+.erroStyle {
+   background-color: #f32727;
+   color:white;
+   padding:20px;
+   border-radius: 10px;
+}
+
+.noErro {
+    visibility: hidden;
+    display: none
+}
+.warningStyle {
+   background-color: lightyellow;
+   padding:20px;
+   border-radius: 10px;
+}
+.noWarning {
+   visibility: hidden;
+   display: none
+}
+.successStyle {
+    background-color: lightgreen;
+    padding:20px;
+    border-radius: 10px;
+}
+.noSuccess{
+   visibility: hidden;
+   display: none
+}
+
+.msg_close {
+    color: currentColor;
+    display: inline-block;
+    position: absolute;
+    right: 15px;
+    font-size: 1rem;
+}
+
+.msg_close:hover {
+    border: 1px solid burlywood;
+    padding:5px;
+    border-radius: 3px;
+}

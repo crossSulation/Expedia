@@ -1,9 +1,11 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import ContactFecthHelper,{ContactModel,ContactDetailModel} from "../services/contactFetch";
 import SearchBar from "./SearchBar";
 import {Link, NavLink } from "react-router-dom";
 import PageBar from "./PageBar";
 import { Route } from 'react-router-dom';
+import ErrorPopupHandler from "./ErrorPopupHandler";
 interface LineProps {
     item:any
 }
@@ -49,7 +51,11 @@ export interface ExpediaState {
     cpageItems: ContactModel[], // current page items //tmpitems
     cindex: number, //current page index
     searchVal:string,
-    Name:string
+    Name:string,
+    hasError: boolean, //Has Error?
+    msg: string, //the error msg,
+    msg_diss:boolean, //close msg,
+    loading: boolean //data loading..
 }
 export default class Expedia extends React.Component<ExpediaProps,ExpediaState> {
     constructor(props:any) {
@@ -60,7 +66,11 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
             cindex: 1,
             cpageItems:[],
             searchVal:null,
-            Name:null
+            Name:null,
+            hasError: false,
+            msg: null,
+            msg_diss:false,
+            loading:false
         }
         this.fetchContactsByUserName =this.fetchContactsByUserName.bind(this);
     }
@@ -70,26 +80,26 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
     }
     componentDidMount() {
        console.log('componentDidMount');
-      
     }
-    componentWillUnmount() {
-
-    }
+  
     fetchContactsByUserName(userName?:string):void {
        //fetch the data from backend
        console.log('api fetch....');
+        this.setState({loading:true});
        if(!userName && !this.state && this.state.Name) {
+           this.setState({loading:false});
            return ;
        }
        ContactFecthHelper.fetchContactByUserName(userName|| this.state && this.state.Name)
        .then((result:ContactModel[])=>{
           //console.log('result....');
           //console.log('result:'+JSON.stringify(result));
-          this.setState({items: result});
+          this.setState({items: result,loading:false});
           this.paging(1);
        })
        .catch((error)=>{
-            console.log(error);
+            //console.log(error);
+            this.setState({hasError:true,msg:error.message});
        });
     }
     /**
@@ -102,7 +112,7 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
            this.setState({cpageItems: this.state.items.slice((cindex-1)*this.state.defaultPageSize,cindex*this.state.defaultPageSize-1),cindex: cindex});
            cindex++;
        }else {
-           //重新向服务器pull 数据
+           //if the current data is bigger than the existed data in client, pull data from the server side
        }
     }
     getCpageIndex():number {
@@ -184,42 +194,44 @@ export default class Expedia extends React.Component<ExpediaProps,ExpediaState> 
         });
         this.setState({cpageItems:currentCpageItems})
     }
+    msgCloseCallback(e:any) {
+        this.setState({msg_diss: true});
+    }
     renderItems =()=>{return this.state.cpageItems.map((titem:ContactModel)=>{
         return <Line item={titem}></Line>
      })};
+     renderHeader =()=>{
+         let headers =[
+         {colName:'UserId',sortBy: this.sortBy.bind(this)},
+         {colName:'Title',sortBy:this.sortBy.bind(this)},
+         {colName:'Name',sortBy:this.sortBy.bind(this)},
+         {colName:'BirthDate',sortBy:this.sortBy.bind(this)},
+         {colName:'Age',sortBy:this.sortBy.bind(this)},
+         {colName:'ContactCount',sortBy:this.sortBy.bind(this)},
+         {colName:'IsFavorite',sortBy:this.sortBy.bind(this)}
+        ];
+     let headerWrap=   headers.map((item,index:number)=>{
+            if(item.sortBy) {
+                return <th key={index} scope="col" className="table-th">
+                    <span onClick={(e)=>{
+                        item.sortBy(e);
+                    }}>{item.colName}</span>
+                </th>
+            }else {
+                return <th key={index} scope="col" className="table-th">{item.colName}</th>
+            }
+            
+        });
+        return headerWrap;
+     };
     render() {
-        
         return(<div>
+            <ErrorPopupHandler prop={{erro: this.state.hasError,msg:this.state.msg,msgCloseCallback: this.msgCloseCallback.bind(this),msg_diss:this.state.msg_diss}}/>
             <SearchBar changCallback={this.typeFuc.bind(this)}/>
             <table className="table table-sm table-hover">
                 <thead className="thead-light">
                     <tr>
-                        <th scope="col" className="table-th">
-                        <span onClick={(e)=>{
-                            this.sortBy(e);
-                        }}>UserId</span>
-                        </th>
-                        <th scope="col" className="table-th"><span onClick={(e)=>{
-                            this.sortBy(e);
-                        }}>Title</span>
-                        </th>
-                        <th scope="col" className="table-th"><span onClick={(e)=>{
-                            this.sortBy(e);
-                        }}>Name</span>
-                        </th>
-                        <th scope="col" className="table-th"><span onClick={(e)=>{
-                            this.sortBy(e);
-                        }}>BirthDate</span>
-                        </th>
-                        <th scope="col" className="table-th"><span onClick={(e)=>{
-                            this.sortBy(e);
-                        }}>Age</span>
-                        </th>
-                        <th scope="col" className="table-th"><span onClick={(e)=>{
-                            this.sortBy(e);
-                        }}>ContactCount</span>
-                        </th>
-                        <th scope="col" className="table-th">IsFavorite</th>
+                      {this.renderHeader()}
                     </tr>
                 </thead>
                 <tbody>
