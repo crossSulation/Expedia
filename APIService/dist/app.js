@@ -4,7 +4,7 @@
  */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const contactCtrl_1 = __importDefault(require("./controllers/contactCtrl"));
@@ -21,3 +21,4 @@ app.get('/contactDetails/userId/:userId', contactCtrl_1.default.getContactDetail
 app.get('/contacts/count/:userName', contactCtrl_1.default.getContactTotalCount);
 app.get('/contacts/count/', contactCtrl_1.default.getContactTotalCount);
 exports.default = app;
+//# sourceMappingURL=app.js.map

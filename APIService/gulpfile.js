@@ -2,12 +2,16 @@ const gulp =require('gulp');
 const ts =require('gulp-typescript');
 const tsProject =ts.createProject('tsconfig.json');
 
+
+const env =process.env.NODE_ENV ;
+
 const server = require('gulp-dev-server');
 
 function defaultCallback() {
+    //console.log(env);
     return tsProject.src()
-            .pipe(tsProject())
-            .js.pipe(gulp.dest('dist'));
+    .pipe(tsProject())
+    .js.pipe(gulp.dest('dist'));
 }
 function createServerCallback() {
     return server.task({
@@ -29,9 +33,9 @@ gulp.task('watch',()=>{
     });
 });
 
-gulp.task('build',['default','watch','creatServer']);
+gulp.task('dev',['default','watch','creatServer']);
 
-gulp.task('server',['default','creatServer']);
+gulp.task('build',['default']);
 
 gulp.task('creatServer',()=>{
     createServerCallback();

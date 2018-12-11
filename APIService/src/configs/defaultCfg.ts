@@ -1,11 +1,11 @@
 import * as config from "./dbconfig";
 export default class DefaultCfg {
     mysql: config.MySqlConfig= {
-        addr:'localhost',
+        addr:'db',
         port:3306,
-        user:'expedia',
-        pwd:'expedia123',
-        database:'Expedia',
+        user:'root',
+        pwd:'root123',
+        database:'expedia',
         connectTimeout:30000
     };
     cache: config.cacheConfig = {

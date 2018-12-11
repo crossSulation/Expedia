@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class DefaultCfg {
     constructor() {
         this.mysql = {
-            addr: 'localhost',
+            addr: '',
             port: 3306,
-            user: 'expedia',
-            pwd: 'expedia123',
-            database: 'Expedia',
+            user: 'root',
+            pwd: 'root123',
+            database: 'expedia',
             connectTimeout: 30000
         };
         this.cache = {
@@ -24,3 +24,4 @@ class DefaultCfg {
     }
 }
 exports.default = DefaultCfg;
+//# sourceMappingURL=defaultCfg.js.map

@@ -1,10 +1,35 @@
-version: '2.1'
+version: '3.3'
 
 services:
   apiservice:
-    image: apiservice
+    container_name: 'backend_apiservice'
+    image: apiservice:latest
     build: .
     environment:
       NODE_ENV: production
     ports:
-      - 3000:3000
+      - 4000:3000
+    depends_on:
+      - db
+  db:
+    container_name: 'mysql_database'
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
+    restart: always
+    build:
+      context: ./mysql
+      args:
+        - MYSQL_DATABASE=expedia
+        - MYSQL_USER=expedia123
+        - MYSQL_PASSWORD=expedia123
+        - MYSQL_ROOT_PASSWORD=root123
+    volumes:
+        - ./data/mysql/:/var/lib/mysql
+        - ./mysql/init:/docker-entrypoint-initdb.d/:ro
+    expose:
+        - "3306"
+  adminer:
+    container_name: 'adminer'
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

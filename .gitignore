@@ -2,3 +2,4 @@
 *.log
 APIService/debug.log
 APIService/dist
+APIService/data

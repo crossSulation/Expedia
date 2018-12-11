@@ -1,8 +1,18 @@
-FROM node:8.9-alpine
+FROM node:latest
+
 ENV NODE_ENV production
-WORKDIR /src
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
+
+# Set the working directory to /app
+WORKDIR /usr/src/app
+
+COPY ["package.json","tsconfig.json","gulpfile.js", "src","/usr/src/app/"]
+
+RUN npm install gulp -g && \
+    npm install
+
+# need copy all the staff to container
 COPY . .
+# Make port 3000 available to the world outside this container
 EXPOSE 3000
-CMD npm run server
+
+CMD npm run prod
