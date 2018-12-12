@@ -2,15 +2,19 @@ version: '3.1'
 
 services:
   apiservice:
+    container_name: 'backend_apiservice'
     image: apiservice
     build: .
     environment:
       NODE_ENV: development
     ports:
       - 4000:3000
-  mysql:
+    depends_on:
+      - db
+  db:
+    container_name: 'mysql_database'
     image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root123  # the root password
