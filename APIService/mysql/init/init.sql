@@ -1,26 +1,14 @@
--- Schema creation
-create database Expedia;
-use Expedia;
+-- Adminer 4.7.0 MySQL dump
 
+SET NAMES utf8;
+SET time_zone = '+00:00';
 
+USE `Expedia`;
 
-CREATE TABLE Contact (
-    UserID INT PRIMARY KEY,
-    Title NVARCHAR(5) NULL,
-    Name NVARCHAR(200) NOT NULL,
-    BirthDate DATETIME NOT NULL,
-    IsFavorite INT NULL
-);
+DELIMITER ;;
 
-CREATE TABLE ContactDetail(
-    UserID int NOT NULL,
-    ContactDetailType nvarchar(20) NOT NULL,
-    ContactDetailContent nvarchar(200) NOT NULL
-);
-
--- data generation - may take a while to fill the tables
-delimiter //
-CREATE PROCEDURE DataFilling()
+DROP PROCEDURE IF EXISTS `DataFilling`;;
+CREATE PROCEDURE `DataFilling`()
 BEGIN
 	-- create 10k users
 	DECLARE counter INT DEFAULT 1;
@@ -51,7 +39,100 @@ BEGIN
         END WHILE;  
 		SET counter = counter + 1;
 	END WHILE;      
-END//
+END;;
 
-delimiter ;
-CALL DataFilling();
+DELIMITER ;
+
+SET NAMES utf8mb4;
+
+DROP TABLE IF EXISTS `Book`;
+CREATE TABLE `Book` (
+  `BookId` int(11) NOT NULL COMMENT 'Primary_key',
+  `Title` varchar(20) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL COMMENT 'Book Title',
+  `Book_Detail_Id` int(11) NOT NULL COMMENT '外键，关联到详情',
+  `Author` varchar(10) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL COMMENT 'Book Author',
+  `Price` decimal(2,0) unsigned NOT NULL DEFAULT '0' COMMENT 'Book Price',
+  `ISN` varchar(50) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL COMMENT 'ISN number',
+  `Front_Page_img_addr` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Book Front Page image',
+  `Vendor_Id` int(11) NOT NULL COMMENT '书本出版商',
+  PRIMARY KEY (`BookId`),
+  KEY `Book_Detail_Id` (`Book_Detail_Id`),
+  KEY `Vendor_Id` (`Vendor_Id`),
+  CONSTRAINT `Book_ibfk_1` FOREIGN KEY (`Book_Detail_Id`) REFERENCES `BookDetail` (`bookid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `Book_ibfk_2` FOREIGN KEY (`Vendor_Id`) REFERENCES `BookVendor` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `BookChapter`;
+CREATE TABLE `BookChapter` (
+  `id` int(11) NOT NULL COMMENT 'Primary_key',
+  `book_chapter_page_id` int(11) NOT NULL COMMENT '外键关联到章节内容',
+  `title` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '章节名称',
+  `summary` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '章节总结',
+  `total_page` int(11) NOT NULL COMMENT '章节页数',
+  PRIMARY KEY (`id`),
+  KEY `book_chapter_page_id` (`book_chapter_page_id`),
+  CONSTRAINT `BookChapter_ibfk_1` FOREIGN KEY (`book_chapter_page_id`) REFERENCES `BookChapter_Page` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `BookChapter_Page`;
+CREATE TABLE `BookChapter_Page` (
+  `id` int(11) NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page_index` int(11) NOT NULL,
+  KEY `id` (`id`),
+  CONSTRAINT `BookChapter_Page_ibfk_1` FOREIGN KEY (`id`) REFERENCES `BookChapter` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `BookContent`;
+CREATE TABLE `BookContent` (
+  `Id` int(11) NOT NULL COMMENT 'Primary_key',
+  `Book_Chapter_Id` int(11) NOT NULL COMMENT '章节',
+  PRIMARY KEY (`Id`),
+  KEY `Book_Chapter_Id` (`Book_Chapter_Id`),
+  CONSTRAINT `BookContent_ibfk_1` FOREIGN KEY (`Book_Chapter_Id`) REFERENCES `BookChapter` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `BookDetail`;
+CREATE TABLE `BookDetail` (
+  `BookId` int(11) NOT NULL COMMENT 'Primary_key',
+  `Book_Conent_Id` int(11) NOT NULL COMMENT '外键关联到书内容',
+  `Book_Preview` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '前言',
+  PRIMARY KEY (`BookId`),
+  KEY `Book_Conent_Id` (`Book_Conent_Id`),
+  CONSTRAINT `BookDetail_ibfk_1` FOREIGN KEY (`Book_Conent_Id`) REFERENCES `BookContent` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `BookVendor`;
+CREATE TABLE `BookVendor` (
+  `Id` int(11) NOT NULL COMMENT 'Primary_key',
+  `vendor_name` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '供应商名称',
+  `vendor_addr` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '供应商地址',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `Contact`;
+CREATE TABLE `Contact` (
+  `UserID` int(11) NOT NULL,
+  `Title` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `BirthDate` datetime NOT NULL,
+  `IsFavorite` int(11) DEFAULT NULL,
+  PRIMARY KEY (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `ContactDetail`;
+CREATE TABLE `ContactDetail` (
+  `UserID` int(11) NOT NULL,
+  `ContactDetailType` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ContactDetailContent` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 2018-12-12 10:18:34
