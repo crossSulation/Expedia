@@ -24,7 +24,7 @@ module.exports = (env) => {
         devServer: {
           proxy: [{
               context:['/contacts','/contactDetails'],
-              target:'http://localhost:3000/'
+              target:'http://localhost:4000/'
           }],
           contentBase:'/dist',
           hot: true
