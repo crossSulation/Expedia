@@ -1,9 +1,10 @@
 FROM mongo:latest
 
 # Add mongo user
-RUN groupadd -r mongo &&\
-    useradd -r -g mongo mongo
-    
-USER mongo
+ARG MONGO_INITDB_ROOT_USERNAME=root
+ARG MONGO_INITDB_ROOT_PASSWORD=root123
+
+ENV MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+ENV MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
 
 CMD mongod --dbpath=/var/lib/mongodb

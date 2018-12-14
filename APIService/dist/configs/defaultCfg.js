@@ -3,25 +3,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class DefaultCfg {
     constructor() {
         this.mysql = {
-            addr: '',
+            addr: 'mysql_database',
             port: 3306,
             user: 'root',
             pwd: 'root123',
-            database: 'expedia',
+            database: 'Expedia',
             connectTimeout: 30000
         };
         this.cache = {
             expireDate: 3000,
             mongodb: {
-                addr: '',
-                port: 3000,
-                user: '',
-                pwd: '',
-                database: '',
+                addr: 'mongo_db',
+                port: 27017,
+                user: 'mongo',
+                pwd: 'mongo',
+                database: 'bookStore',
                 connectTimeout: 30000
             }
         };
     }
 }
 exports.default = DefaultCfg;
-//# sourceMappingURL=defaultCfg.js.map

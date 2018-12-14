@@ -73,4 +73,3 @@ class DBHelper {
 }
 //CURD
 exports.default = new DBHelper();
-//# sourceMappingURL=DBHelper.js.map

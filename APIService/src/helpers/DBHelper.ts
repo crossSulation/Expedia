@@ -1,5 +1,6 @@
 import mysql, { MysqlError, FieldInfo } from "mysql";
 import DBConfig from "../configs/defaultCfg";
+import logger from "./LogHelper";
 
 class DBHelper {
     private _instance: mysql.Connection;
@@ -11,8 +12,10 @@ class DBHelper {
     }
 
     createConnection():mysql.Connection {
+        logger.info('ENV:「'+process.env.NODE_ENV);
+        let env_c =process.env.NODE_ENV;
         return mysql.createConnection({
-            host: this._dbConfig.mysql.addr,
+            host: env_c =='production'?this._dbConfig.mysql.addr_container :this._dbConfig.mysql.addr_local,
             port: this._dbConfig.mysql.port,
             password: this._dbConfig.mysql.pwd,
             user: this._dbConfig.mysql.user,

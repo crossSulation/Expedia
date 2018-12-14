@@ -1,7 +1,8 @@
 import * as config from "./dbconfig";
 export default class DefaultCfg {
     mysql: config.MySqlConfig= {
-        addr:'mysql_database',
+        addr_container:'mysql_database',
+        addr_local: 'localhost',
         port:3306,
         user:'root',
         pwd:'root123',
@@ -11,11 +12,12 @@ export default class DefaultCfg {
     cache: config.cacheConfig = {
         expireDate: 3000,
         mongodb:{
-            addr:'',
-            port:3000,
-            user:'',
-            pwd:'',
-            database:'',
+            addr_container:'mongo_db',
+            addr_local:'localhost',
+            port:27017,
+            user:'mongo',
+            pwd:'mongo',
+            database:'bookStore',
             connectTimeout:30000
         }
     }

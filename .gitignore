@@ -1,5 +1,5 @@
 **/*/node_modules
 *.log
 APIService/debug.log
-APIService/dist
+APIService/dist/*
 APIService/data

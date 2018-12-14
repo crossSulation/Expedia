@@ -3,20 +3,15 @@
  */
 
 import express from "express";
-import contactCtr from "./controllers/contactCtrl";
-
+import ContactCtrl  from "./controllers/contactCtrl";
+import FileManageCtrl from "./controllers/fileManageCtrl";
 import bodyParser= require("body-parser");
-const app = express();
+const app:express.Express = express();
 
 //express setting
 app.use(bodyParser.json());
 app.set('port',process.env.PORT || 3000);
-app.post('/contacts',contactCtr.getAllContacts);
-app.get('/contacts/userId/:userId',contactCtr.getContactsByUserId);
-app.get('/contacts/userName/:name',contactCtr.getContactsByUserLike);
-app.get('/contacts/userName/',contactCtr.getContactsByUserLike);
-app.get('/contactDetails/userId/:userId',contactCtr.getContactDetailByUserId);
-app.get('/contacts/count/:userName',contactCtr.getContactTotalCount);
-app.get('/contacts/count/',contactCtr.getContactTotalCount);
-
+//wrap the function
+new ContactCtrl(app);
+new FileManageCtrl(app);
 export default app;

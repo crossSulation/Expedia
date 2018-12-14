@@ -13,12 +13,6 @@ const app = express_1.default();
 //express setting
 app.use(bodyParser.json());
 app.set('port', process.env.PORT || 3000);
-app.post('/contacts', contactCtrl_1.default.getAllContacts);
-app.get('/contacts/userId/:userId', contactCtrl_1.default.getContactsByUserId);
-app.get('/contacts/userName/:name', contactCtrl_1.default.getContactsByUserLike);
-app.get('/contacts/userName/', contactCtrl_1.default.getContactsByUserLike);
-app.get('/contactDetails/userId/:userId', contactCtrl_1.default.getContactDetailByUserId);
-app.get('/contacts/count/:userName', contactCtrl_1.default.getContactTotalCount);
-app.get('/contacts/count/', contactCtrl_1.default.getContactTotalCount);
+//wrap the function
+contactCtrl_1.default(app);
 exports.default = app;
-//# sourceMappingURL=app.js.map

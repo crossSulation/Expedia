@@ -1,6 +1,7 @@
 
 export interface MySqlConfig {
-    addr: string,
+    addr_container: string, // addr for docker container
+    addr_local:string, // addr for local debug
     port: number,
     user: string,
     pwd : string,
@@ -14,7 +15,8 @@ export interface cacheConfig {
 }
 
 export interface MongodbConfig {
-    addr: string,
+    addr_container: string,// addr for docker container
+    addr_local:string, // addr for local debug
     port: number,
     user: string,
     pwd : string,

@@ -7,6 +7,12 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/node_modules/mongo-express/app.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "启动程序",
             "program": "${workspaceFolder}/dist/server.js",
             "preLaunchTask": "tsc: build - tsconfig.json",
