@@ -8,6 +8,7 @@ import {Request ,Response} from 'express';
 import logger from "../helpers/LogHelper";
 import  url  from "../utils/Url";
 import { Express } from "express";
+import clc from "cli-color";
     //CURD
 
 class ContactCtrl {
@@ -46,21 +47,26 @@ class ContactCtrl {
     private _app :Express
     constructor(app:Express) {
         this._app =app;
+        this.makeCall();
     }
 
     makeCall() {
        Object.keys(this.urls).forEach((key)=>{
             let tmp =this.urls[key];
              if(tmp.method=='POST') {
+                console.log(clc.green('/POST '+tmp.url));
                 this._app.post(tmp.url,tmp.cb);
              }
              if(tmp.method=='GET') {
+                console.log(clc.green('/GET '+tmp.url));
                 this._app.get(tmp.url,tmp.cb);
              }
              if(tmp.method=='PUT') {
+                console.log(clc.green('/PUT '+tmp.url));
                 this._app.put(tmp.url,tmp.cb);
              }
              if(tmp.method=='DELETE') {
+                console.log(clc.green('/DELETE '+tmp.url));
                 this._app.delete(tmp.url,tmp.cb);
              }
        });

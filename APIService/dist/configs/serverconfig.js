@@ -4,3 +4,4 @@ exports.default = {
     host: 'localhost',
     port: process.env.PORT || 3000
 };
+//# sourceMappingURL=serverconfig.js.map

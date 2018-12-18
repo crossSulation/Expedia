@@ -33,3 +33,4 @@ let logger = Winston.createLogger({
     exitOnError: false
 });
 exports.default = logger;
+//# sourceMappingURL=LogHelper.js.map

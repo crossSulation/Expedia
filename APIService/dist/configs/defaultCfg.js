@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class DefaultCfg {
     constructor() {
         this.mysql = {
-            addr: 'mysql_database',
+            addr_container: 'mysql_database',
+            addr_local: 'localhost',
             port: 3306,
             user: 'root',
             pwd: 'root123',
@@ -13,14 +14,18 @@ class DefaultCfg {
         this.cache = {
             expireDate: 3000,
             mongodb: {
-                addr: 'mongo_db',
+                addr_container: 'mongo_db',
+                addr_local: 'mongodb://root:root123@localhost:27017',
+                autoReconnection: true,
                 port: 27017,
-                user: 'mongo',
-                pwd: 'mongo',
+                user: 'root',
+                pwd: 'root123',
                 database: 'bookStore',
+                collection: 'uploads',
                 connectTimeout: 30000
             }
         };
     }
 }
 exports.default = DefaultCfg;
+//# sourceMappingURL=defaultCfg.js.map

@@ -17,6 +17,8 @@ export interface cacheConfig {
 export interface MongodbConfig {
     addr_container: string,// addr for docker container
     addr_local:string, // addr for local debug
+    autoReconnection: boolean,
+    collection:string,
     port: number,
     user: string,
     pwd : string,

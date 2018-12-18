@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
 const defaultCfg_1 = __importDefault(require("../configs/defaultCfg"));
+const LogHelper_1 = __importDefault(require("./LogHelper"));
 class DBHelper {
     constructor() {
         this._dbConfig = new defaultCfg_1.default();
@@ -12,8 +13,10 @@ class DBHelper {
         this.openDB();
     }
     createConnection() {
+        LogHelper_1.default.info('ENV:「' + process.env.NODE_ENV);
+        let env_c = process.env.NODE_ENV;
         return mysql_1.default.createConnection({
-            host: this._dbConfig.mysql.addr,
+            host: env_c == 'production' ? this._dbConfig.mysql.addr_container : this._dbConfig.mysql.addr_local,
             port: this._dbConfig.mysql.port,
             password: this._dbConfig.mysql.pwd,
             user: this._dbConfig.mysql.user,
@@ -73,3 +76,4 @@ class DBHelper {
 }
 //CURD
 exports.default = new DBHelper();
+//# sourceMappingURL=DBHelper.js.map

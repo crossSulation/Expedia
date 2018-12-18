@@ -7,6 +7,7 @@ declare namespace url {
     export interface UrlProp {
         method:string,
         url: string,
+        single?: boolean, //for file upload ,single or multiple 
         cb:RequestHandler
     }
     

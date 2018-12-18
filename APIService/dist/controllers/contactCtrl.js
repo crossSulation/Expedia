@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DBHelper_1 = __importDefault(require("../helpers/DBHelper"));
 const mysql_1 = require("mysql");
 const LogHelper_1 = __importDefault(require("../helpers/LogHelper"));
+const cli_color_1 = __importDefault(require("cli-color"));
 //CURD
 class ContactCtrl {
     constructor(app) {
@@ -45,20 +46,25 @@ class ContactCtrl {
             }
         };
         this._app = app;
+        this.makeCall();
     }
     makeCall() {
         Object.keys(this.urls).forEach((key) => {
             let tmp = this.urls[key];
             if (tmp.method == 'POST') {
+                console.log(cli_color_1.default.green('/POST ' + tmp.url));
                 this._app.post(tmp.url, tmp.cb);
             }
             if (tmp.method == 'GET') {
+                console.log(cli_color_1.default.green('/GET ' + tmp.url));
                 this._app.get(tmp.url, tmp.cb);
             }
             if (tmp.method == 'PUT') {
+                console.log(cli_color_1.default.green('/PUT ' + tmp.url));
                 this._app.put(tmp.url, tmp.cb);
             }
             if (tmp.method == 'DELETE') {
+                console.log(cli_color_1.default.green('/DELETE ' + tmp.url));
                 this._app.delete(tmp.url, tmp.cb);
             }
         });
@@ -175,4 +181,5 @@ class ContactCtrl {
         });
     }
 }
-exports.default = contactCtrl;
+exports.default = ContactCtrl;
+//# sourceMappingURL=contactCtrl.js.map

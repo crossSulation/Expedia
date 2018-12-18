@@ -1,5 +1,12 @@
 **/*/node_modules
 *.log
 APIService/debug.log
-APIService/dist/*
+
+APIService/dist
+
 APIService/data
+# Object file
+*.o
+
+# Ada Library Information
+*.ali
