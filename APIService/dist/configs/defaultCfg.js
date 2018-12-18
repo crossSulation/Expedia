@@ -14,7 +14,7 @@ class DefaultCfg {
         this.cache = {
             expireDate: 3000,
             mongodb: {
-                addr_container: 'mongo_db',
+                addr_container: 'mongodb://mongo_db',
                 addr_local: 'mongodb://root:root123@localhost:27017',
                 autoReconnection: true,
                 port: 27017,
