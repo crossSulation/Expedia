@@ -1,28 +1,33 @@
 import * as React from "react";
 import ContactFetchHelper from "../services/contactFetch";
+import ErrorPopupHandler from "./ErrorPopupHandler";
 
 interface ContactDetailItemProps {
     item: any
 }
-class ContactDetailItem extends React.Component<ContactDetailItemProps,{}> {
+class ContactDetailItem extends React.Component<ContactDetailItemProps,any> {
     constructor(props:any) {
         super(props);
+        this.state ={
+            ContactDetailType : this.props.item.ContactDetailType,
+            ContactDetailContent: this.props.item.ContactDetailContent
+        }
     }
 
     render() {
         return (<div className="card border-light card-item">
          <div className="card-header">
-           <p>{this.props.item.ContactDetailType}</p>
+           <p>{this.state.ContactDetailType}</p>
          </div>
          <div className="card-body">
            <form>
                <div className="form-group">
                  <label htmlFor="contactType" className="form-label">ContactType</label>
-                 <input type="text" id="contactType" className="form-control" value={this.props.item.ContactDetailType}/>
+                 <input type="text"  className="form-control" value={this.state.ContactDetailType}  readOnly/>
                </div>
                <div className="form-group">
                  <label htmlFor="contactContent" className="form-label">ContactContent</label>
-                 <input type="text" id="contactContent" className="form-control" value={this.props.item.ContactDetailContent}/>
+                 <input type="text"  className="form-control" value={this.state.ContactDetailContent}  readOnly/>
                </div>
            </form>
            <div className="card-item-btn-group">
@@ -41,7 +46,10 @@ export default class ContactDetail extends React.Component<any,any> {
     constructor(props:any) {
         super(props);
         this.state ={
-           details_items:[]
+           details_items:[],
+           hasError:false,
+           msg:null,
+           msg_diss:false
         }
     }
     
@@ -49,25 +57,31 @@ export default class ContactDetail extends React.Component<any,any> {
         const userId =this.props.match.params.userId;
         ContactFetchHelper.fetchContactDetailByUserId(userId)
         .then((result)=>{
-            console.log(JSON.stringify(result));
+            //console.log(JSON.stringify(result));
             this.setState({details_items:result});
         })
         .catch((error)=>{
-
+            this.setState({hasError:true,msg:error.message});
         });
     }
+    msgCloseCallback(e:any) {
+       this.setState({msg_diss:true})
+    }
     render() {
-        let itemRows:any[] =[];
-        for(let i=0;i<this.state.details_items.length;i++) {
-            let item =<div key={i} className="col-4">
-                    <ContactDetailItem  item={this.state.details_items[i]}/>
-                </div>
-            itemRows.push(item);
-        }
+        const { details_items } = this.state;
+        // console.log(JSON.stringify(details_items));
         return(
-            <div className="row">
-              {itemRows}
-            </div>
+            <React.Fragment>
+                <ErrorPopupHandler prop={{erro: this.state.hasError,msg:this.state.msg,msgCloseCallback: this.msgCloseCallback.bind(this),msg_diss:this.state.msg_diss}}/>
+                <div className="row">
+                {/* {itemRows} */}
+                 {details_items.map((item:any,index:number) => (
+                    <div key={index} className="col-4">
+                        <ContactDetailItem  item={item}/>
+                    </div>
+                ))}
+                </div>
+           </React.Fragment>
         );
     }
 }

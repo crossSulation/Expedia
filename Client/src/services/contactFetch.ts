@@ -22,7 +22,7 @@ import { resolve } from "url";
       
       /**
        * 
-       * @param query 查询条件
+       * @param query query condition
        */
     let  fetchAllContact =(query ?:ContactModel):Promise<ContactModel[]> =>{
          const promise = new Promise((resolve,reject)=>{
@@ -62,7 +62,7 @@ import { resolve } from "url";
       }
       /**
        * 
-       * @param userId 根据Id 返回一条
+       * @param userId return one row by given userid
        */
     let  fethContactByUserId =(userId:string):Promise<ContactModel>=> {
           const promise =new Promise((resolve,reject)=>{

@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  */
 const DBHelper_1 = __importDefault(require("../helpers/DBHelper"));
+const mysql_1 = require("mysql");
 const LogHelper_1 = __importDefault(require("../helpers/LogHelper"));
 //CURD
 let queryAllContacts = (req, resp) => {
@@ -21,17 +22,17 @@ let queryAllContacts = (req, resp) => {
         sql = sql + ' where';
     }
     if (rawReq.title) {
-        sql = sql + ` c.Title='${rawReq.title}' and`;
+        sql = sql + ` c.Title='${mysql_1.escape(rawReq.title)}' and`;
     }
     if (rawReq.name) {
-        sql = sql + ` c.Name='${rawReq.name}' and`;
+        sql = sql + ` c.Name='${mysql_1.escape(rawReq.name)}' and`;
     }
     if (rawReq.birthDate) {
-        sql = sql + ` c.BirthDate='${rawReq.birthDate}' and`;
+        sql = sql + ` c.BirthDate='${mysql_1.escape(rawReq.birthDate)}' and`;
     }
     //console.log(rawReq.isFavorite);
     if (rawReq.isFavorite != undefined || rawReq.isFavorite != '' || rawReq.isFavorite != null) {
-        sql = sql + ` c.IsFavorite =${rawReq.isFavorite}`;
+        sql = sql + ` c.IsFavorite =${mysql_1.escape(rawReq.isFavorite)}`;
     }
     // remove the  last 'and'
     if (sql.lastIndexOf('and') == (sql.length - 3)) {
@@ -83,7 +84,6 @@ let queryContactsByUserId = (req, resp) => {
     if (req.params.orderBy) {
         sql = sql + ` order by ${req.params.orderBy} ${req.params.descORAsc ? req.params.descORAsc : ' desc'}`;
     }
-    sql = sql + ` limit 1000`;
     //console.log(sql);
     LogHelper_1.default.info(`api from: ${req.originalUrl},sql: ${sql}`);
     DBHelper_1.default.query(sql, [], (result, fields) => {

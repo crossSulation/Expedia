@@ -3,7 +3,7 @@
  * 
  */
 import DBHelper from "../helpers/DBHelper";
-import { FieldInfo, raw } from "mysql";
+import { FieldInfo, raw,escape,escapeId } from "mysql";
 import {Request ,Response} from 'express';
 import logger from "../helpers/LogHelper";
     //CURD
@@ -19,17 +19,17 @@ import logger from "../helpers/LogHelper";
              sql =sql+ ' where';
          }
          if(rawReq.title) {
-             sql=sql+` c.Title='${rawReq.title}' and`;
+             sql=sql+` c.Title='${escape(rawReq.title)}' and`;
          }
          if(rawReq.name) {
-             sql=sql+` c.Name='${rawReq.name}' and`;
+             sql=sql+` c.Name='${escape(rawReq.name)}' and`;
          }
          if(rawReq.birthDate){
-             sql=sql+` c.BirthDate='${rawReq.birthDate}' and`;
+             sql=sql+` c.BirthDate='${escape(rawReq.birthDate)}' and`;
          }
          //console.log(rawReq.isFavorite);
          if(rawReq.isFavorite !=undefined || rawReq.isFavorite!='' || rawReq.isFavorite!=null) {
-             sql=sql+` c.IsFavorite =${rawReq.isFavorite}`;
+             sql=sql+` c.IsFavorite =${escape(rawReq.isFavorite)}`;
          }
          // remove the  last 'and'
          if(sql.lastIndexOf('and')==(sql.length-3)) {
@@ -83,7 +83,6 @@ import logger from "../helpers/LogHelper";
         if(req.params.orderBy) {
             sql =sql +` order by ${req.params.orderBy} ${req.params.descORAsc? req.params.descORAsc : ' desc'}`;
         }
-        sql =sql +` limit 1000`;
         //console.log(sql);
         logger.info(`api from: ${req.originalUrl},sql: ${sql}`)
         DBHelper.query(sql,[],(result:any,fields:FieldInfo[])=>{
