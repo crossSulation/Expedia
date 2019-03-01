@@ -10,6 +10,7 @@ const DBHelper_1 = __importDefault(require("../helpers/DBHelper"));
 const mysql_1 = require("mysql");
 const LogHelper_1 = __importDefault(require("../helpers/LogHelper"));
 const cli_color_1 = __importDefault(require("cli-color"));
+const setupHeadersHandler_1 = __importDefault(require("../middleWares/setupHeadersHandler"));
 //CURD
 class ContactCtrl {
     constructor(app) {
@@ -46,6 +47,7 @@ class ContactCtrl {
             }
         };
         this._app = app;
+        app.use(setupHeadersHandler_1.default);
         this.makeCall();
     }
     makeCall() {
@@ -182,4 +184,3 @@ class ContactCtrl {
     }
 }
 exports.default = ContactCtrl;
-//# sourceMappingURL=contactCtrl.js.map

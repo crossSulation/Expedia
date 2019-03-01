@@ -7,6 +7,7 @@ import clc from "cli-color";
 import fs from "fs";
 import Multer from "multer";
 import { Request } from "express-serve-static-core";
+import setupHeaderHander  from "../middleWares/setupHeadersHandler";
 import MongoGridFsHelper,{ MongoGridFsHelperResult } from "../helpers/MongoGridFsHelper";
  class FileMangeCtrl {
      private _app:Express;
@@ -53,6 +54,7 @@ import MongoGridFsHelper,{ MongoGridFsHelperResult } from "../helpers/MongoGridF
      }
      constructor(app:Express) {
         this._app =app;
+        app.use(setupHeaderHander);
         this.init();
      }
      
@@ -143,9 +145,34 @@ import MongoGridFsHelper,{ MongoGridFsHelperResult } from "../helpers/MongoGridF
           this._grid_fs_helper.deleteFile(req,resp);
       }
       
+      /**
+       * 
+       * @param req 
+       * @param resp 
+       */
       updateFileName(req:Request,resp:Response) {
           console.log(clc.green(`update filename file_id ${req.params.id}`));
           this._grid_fs_helper.updateFileName(req,resp);
+      }
+      
+      /**
+       * @description get the thumbnail of upload file
+       * @param req 
+       * @param resp
+       * TODO 
+       */
+      getThumbnailOfImage(req:Request, resp:Response) {
+        
+      }
+
+      /**
+       * @description shim the image when upload the file with wrong orientation
+       * @param req 
+       * @param resp 
+       * TODO
+       */
+      tranformImageByExif(req:Request,resp:Response) {
+
       }
  }
 

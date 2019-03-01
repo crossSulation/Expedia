@@ -9,6 +9,7 @@ import logger from "../helpers/LogHelper";
 import  url  from "../utils/Url";
 import { Express } from "express";
 import clc from "cli-color";
+import setupHeaderHander  from "../middleWares/setupHeadersHandler";
     //CURD
 
 class ContactCtrl {
@@ -47,6 +48,7 @@ class ContactCtrl {
     private _app :Express
     constructor(app:Express) {
         this._app =app;
+        app.use(setupHeaderHander);
         this.makeCall();
     }
 

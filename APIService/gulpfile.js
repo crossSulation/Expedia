@@ -23,6 +23,16 @@ function createServerCallback() {
         }
     })
 }
+gulp.task('copycss',['default'],()=>{
+   return gulp.src(['src/public/css/**/*.css','src/public/css/**/*.scss'])
+    .pipe(gulp.dest('dist/public/css'));
+});
+gulp.task('copyejs',()=>{
+    return gulp.src(['src/views/**/*.ejs'])
+    .pipe(gulp.dest('dist/views'));
+});
+gulp.task('copy',['copyejs','copycss']);
+
 gulp.task('default',()=>{
     defaultCallback();
 });
@@ -33,9 +43,9 @@ gulp.task('watch',()=>{
     });
 });
 
-gulp.task('dev',['default','watch','creatServer']);
+gulp.task('dev',['default','copy','watch','creatServer']);
 
-gulp.task('build',['default']);
+gulp.task('build',['default','copy']);
 
 gulp.task('creatServer',()=>{
     createServerCallback();

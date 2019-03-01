@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Room</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="stylesheet" href="/public/css/site.css"/>
+    <link rel="stylesheet" type="stylesheet" href="/public/bootstrap/dist/css/bootstrap.min.css"/>
+  </head>
+  <body>
+  <div id="header">
+    <%- include('header/index',{headerCfgs: data.headerCfgs}) %> 
+  </div>
+  <div id="container" role="main" class="container">
+    <div class="row">
+        <section id="contact" class="contactList col-4">
+            <%- include('partials/contactList/index',{ contactList: data.contactList}) %> 
+        </section>
+        <section id="msgbox"  class="messageBox col-8">
+           <%- include('partials/messagebox/index',{ mBoxCfgs: data.mBoxCfgs}) %> 
+        </section>
+    </div>
+  </div>
+  <script type="text/javascript" src="/public/lib/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/public/lib/eventEmitter/EventEmitter.min.js"></script>
+  <script type="text/javascript" src="/public/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/public/lib/backbone/backbone-min.js"></script>
+  <script type="text/javascript" src="/public/lib/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="/public/lib/peerjs/peer.min.js"></script>
+  <script type="text/javascript" src="/public/js/app.js"></script>
+  </body>
+</html>
+

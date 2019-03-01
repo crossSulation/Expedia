@@ -28,4 +28,3 @@ class DefaultCfg {
     }
 }
 exports.default = DefaultCfg;
-//# sourceMappingURL=defaultCfg.js.map

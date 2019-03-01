@@ -1,0 +1,25 @@
+{
+  "name": "backbone-chat",
+  "main": "index.js",
+  "version": "0.0.0",
+  "authors": [
+    "laxliu <laxajaxmail@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src/bower_components",
+    "src/public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~3.3.1",
+    "bootstrap": "latest",
+    "eventEmitter": "latest",
+    "peerjs": "latest",
+    "underscore": "latest",
+    "backbone":"latest"
+  }
+}

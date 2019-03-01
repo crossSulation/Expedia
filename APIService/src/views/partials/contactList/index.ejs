@@ -1,0 +1,11 @@
+<%- include("search_contact") %> 
+<div class="contact_list">
+   <% for( let j = 0; j < contactList.length; j++ ) { %>
+        <section class="contact_group_item">
+            <div class="contact_group_item_label"></div>
+            <% for( let i = 0; i < contactList[j].length; i++ ) { %>
+                 <div class="contact_item"></div>
+            <% } %>
+        </section>
+   <% } %>
+<div>
